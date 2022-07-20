@@ -1,0 +1,29 @@
+{
+  "name": "kdu-devtools",
+  "version": "6.1.4-alpha.0",
+  "description": "devtools for Kdu.js!",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "eslint --ext .js,.ts,.kdu ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdujs/kdu-devtools.git"
+  },
+  "author": "NKDuy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kdujs/kdu-devtools/issues"
+  },
+  "homepage": "https://github.com/kdujs/kdu-devtools#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=8.10"
+  }
+}
