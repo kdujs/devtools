@@ -1,11 +1,11 @@
 {
   "name": "@kdujs/devtools-api",
-  "version": "6.1.4-alpha.0",
+  "version": "6.0.0-beta.7",
   "description": "Interact with the Kdu devtools from the page",
   "main": "lib/cjs/index.js",
   "browser": "lib/esm/index.js",
   "module": "lib/esm/index.js",
-  "types": "lib/esm/index.d.ts",
+  "types": "lib/cjs/index.d.ts",
   "sideEffects": false,
   "author": {
     "name": "NKDuy"
@@ -25,13 +25,14 @@
   },
   "scripts": {
     "build": "rimraf lib && yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc --module es2015 --outDir lib/esm -d",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
-    "build:watch": "yarn tsc --module es2015 --outDir lib/esm -d -w --sourceMap"
+    "build:esm": "tsc --module es2015 --outDir lib/esm",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs -d",
+    "build:watch": "yarn tsc --module commonjs --outDir lib/cjs -d -w --sourceMap",
+    "ts": "yarn build:esm"
   },
   "devDependencies": {
     "@types/node": "^13.9.1",
     "@types/webpack-env": "^1.15.1",
-    "typescript": "^4.5.2"
+    "typescript": "^3.8.3"
   }
 }

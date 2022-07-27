@@ -1,4 +1,4 @@
-import { ComponentTreeNode, InspectedComponentData, ComponentInstance, ComponentDevtoolsOptions } from './component'
+import { ComponentTreeNode, InspectedComponentData, ComponentInstance } from './component'
 import { App } from './app'
 import { CustomInspectorNode, CustomInspectorState, TimelineEvent } from './api'
 
@@ -13,18 +13,13 @@ export const enum Hooks {
   INSPECT_COMPONENT = 'inspectComponent',
   GET_COMPONENT_BOUNDS = 'getComponentBounds',
   GET_COMPONENT_NAME = 'getComponentName',
-  GET_COMPONENT_INSTANCES = 'getComponentInstances',
   GET_ELEMENT_COMPONENT = 'getElementComponent',
   GET_COMPONENT_ROOT_ELEMENTS = 'getComponentRootElements',
   EDIT_COMPONENT_STATE = 'editComponentState',
-  GET_COMPONENT_DEVTOOLS_OPTIONS = 'getAppDevtoolsOptions',
-  GET_COMPONENT_RENDER_CODE = 'getComponentRenderCode',
   INSPECT_TIMELINE_EVENT = 'inspectTimelineEvent',
-  TIMELINE_CLEARED = 'timelineCleared',
   GET_INSPECTOR_TREE = 'getInspectorTree',
   GET_INSPECTOR_STATE = 'getInspectorState',
-  EDIT_INSPECTOR_STATE = 'editInspectorState',
-  SET_PLUGIN_SETTINGS = 'setPluginSettings',
+  EDIT_INSPECTOR_STATE = 'editInspectorState'
 }
 
 export interface ComponentBounds {
@@ -58,7 +53,6 @@ export type HookPayloads = {
     filter: string
   }
   [Hooks.VISIT_COMPONENT_TREE]: {
-    app: App
     componentInstance: ComponentInstance
     treeNode: ComponentTreeNode
     filter: string
@@ -68,7 +62,6 @@ export type HookPayloads = {
     parentInstances: ComponentInstance[]
   }
   [Hooks.INSPECT_COMPONENT]: {
-    app: App
     componentInstance: ComponentInstance
     instanceData: InspectedComponentData
   }
@@ -80,10 +73,6 @@ export type HookPayloads = {
     componentInstance: ComponentInstance
     name: string
   }
-  [Hooks.GET_COMPONENT_INSTANCES]: {
-    app: App
-    componentInstances: ComponentInstance[]
-  }
   [Hooks.GET_ELEMENT_COMPONENT]: {
     element: HTMLElement | any
     componentInstance: ComponentInstance
@@ -93,29 +82,16 @@ export type HookPayloads = {
     rootElements: (HTMLElement | any)[]
   }
   [Hooks.EDIT_COMPONENT_STATE]: {
-    app: App
     componentInstance: ComponentInstance
     path: string[]
-    type: string
     state: EditStatePayload
-    set: (object: any, path?: string | (string[]), value?: any, cb?: (object: any, field: string, value: any) => void) => void
-  }
-  [Hooks.GET_COMPONENT_DEVTOOLS_OPTIONS]: {
-    componentInstance: ComponentInstance
-    options: ComponentDevtoolsOptions
-  }
-  [Hooks.GET_COMPONENT_RENDER_CODE]: {
-    componentInstance: ComponentInstance
-    code: string
   }
   [Hooks.INSPECT_TIMELINE_EVENT]: {
-    app: App
     layerId: string
     event: TimelineEvent
     all?: boolean
     data: any
   }
-  [Hooks.TIMELINE_CLEARED]: Record<string, never>
   [Hooks.GET_INSPECTOR_TREE]: {
     app: App
     inspectorId: string
@@ -133,17 +109,8 @@ export type HookPayloads = {
     inspectorId: string
     nodeId: string
     path: string[]
-    type: string
     state: EditStatePayload
-    set: (object: any, path?: string | (string[]), value?: any, cb?: (object: any, field: string, value: any) => void) => void
-  }
-  [Hooks.SET_PLUGIN_SETTINGS]: {
-    app: App
-    pluginId: string
-    key: string
-    newValue: any
-    oldValue: any
-    settings: any
+    set: (object: any, path: string | (string[]), value: any, cb?: (object: any, field: string, value: any) => void) => void
   }
 }
 
@@ -170,16 +137,11 @@ export interface Hookable<TContext> {
   inspectComponent (handler: HookHandler<HookPayloads[Hooks.INSPECT_COMPONENT], TContext>)
   getComponentBounds (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_BOUNDS], TContext>)
   getComponentName (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_NAME], TContext>)
-  getComponentInstances (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_INSTANCES], TContext>)
   getElementComponent (handler: HookHandler<HookPayloads[Hooks.GET_ELEMENT_COMPONENT], TContext>)
   getComponentRootElements (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_ROOT_ELEMENTS], TContext>)
   editComponentState (handler: HookHandler<HookPayloads[Hooks.EDIT_COMPONENT_STATE], TContext>)
-  getComponentDevtoolsOptions (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_DEVTOOLS_OPTIONS], TContext>)
-  getComponentRenderCode (handler: HookHandler<HookPayloads[Hooks.GET_COMPONENT_RENDER_CODE], TContext>)
   inspectTimelineEvent (handler: HookHandler<HookPayloads[Hooks.INSPECT_TIMELINE_EVENT], TContext>)
-  timelineCleared (handler: HookHandler<HookPayloads[Hooks.TIMELINE_CLEARED], TContext>)
   getInspectorTree (handler: HookHandler<HookPayloads[Hooks.GET_INSPECTOR_TREE], TContext>)
   getInspectorState (handler: HookHandler<HookPayloads[Hooks.GET_INSPECTOR_STATE], TContext>)
   editInspectorState (handler: HookHandler<HookPayloads[Hooks.EDIT_INSPECTOR_STATE], TContext>)
-  setPluginSettings (handler: HookHandler<HookPayloads[Hooks.SET_PLUGIN_SETTINGS], TContext>)
 }

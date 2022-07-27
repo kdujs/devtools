@@ -1,23 +1,21 @@
 import { InspectorNodeTag } from './api'
-import { ID } from './util'
 
 export type ComponentInstance = any // @TODO
 
 export interface ComponentTreeNode {
-  uid: ID
+  uid: number
   id: string
   name: string
-  renderKey: string | number
+  renderKey: string
   inactive: boolean
   isFragment: boolean
   hasChildren: boolean
   children: ComponentTreeNode[]
-  domOrder?: number[]
+  positionTop?: number
   consoleId?: string
   isRouterView?: boolean
   macthedRouteSegment?: string
   tags: InspectorNodeTag[]
-  meta?: any
 }
 
 export interface InspectedComponentData {
@@ -31,7 +29,7 @@ export interface InspectedComponentData {
 export interface StateBase {
   key: string
   value: any
-  editable?: boolean
+  editable: boolean
   objectType?: 'ref' | 'reactive' | 'computed' | 'other'
   raw?: string
 }
@@ -52,37 +50,22 @@ export interface ComponentPropState extends ComponentStateBase {
 export type ComponentBuiltinCustomStateTypes = 'function' | 'map' | 'set' | 'reference' | 'component' | 'component-definition' | 'router' | 'store'
 
 export interface ComponentCustomState extends ComponentStateBase {
-  value: CustomState
-}
-
-export type CustomState = {
-  _custom: {
-    type: ComponentBuiltinCustomStateTypes | string
-    objectType?: string
-    display?: string
-    tooltip?: string
-    value?: any
-    abstract?: boolean
-    file?: string
-    uid?: number
-    readOnly?: boolean
-    /** Configure immediate child fields */
-    fields?: {
-      abstract?: boolean
-    }
-    id?: any
-    actions?: {
-      icon: string
+  value: {
+    _custom: {
+      type: ComponentBuiltinCustomStateTypes | string
+      display?: string
       tooltip?: string
-      action: () => void | Promise<void>
-    }[]
-    /** internal */
-    _reviveId?: number
+      value?: any
+      abstract?: boolean
+      file?: string
+      uid?: number
+      readOnly?: boolean
+      /** Configure immediate child fields */
+      fields?: {
+        abstract?: boolean
+      }
+    }
   }
 }
 
 export type ComponentState = ComponentStateBase | ComponentPropState | ComponentCustomState
-
-export interface ComponentDevtoolsOptions {
-  hide?: boolean
-}

@@ -1,15 +1,11 @@
 import { PluginDescriptor, SetupFunction } from '.'
-import { ApiProxy } from './proxy'
-
-export interface PluginQueueItem {
-  pluginDescriptor: PluginDescriptor
-  setupFn: SetupFunction
-  proxy?: ApiProxy
-}
+import { HookHandler } from './api'
 
 interface GlobalTarget {
-  __KDU_DEVTOOLS_PLUGINS__?: PluginQueueItem[]
-  __KDU_DEVTOOLS_PLUGIN_API_AVAILABLE__?: boolean
+  __KDU_DEVTOOLS_PLUGINS__: Array<{
+    pluginDescriptor: PluginDescriptor
+    setupFn: SetupFunction
+  }>
 }
 
 export function getDevtoolsGlobalHook (): any {
@@ -18,11 +14,9 @@ export function getDevtoolsGlobalHook (): any {
 
 export function getTarget (): GlobalTarget {
   // @ts-ignore
-  return (typeof navigator !== 'undefined' && typeof window !== 'undefined')
+  return typeof navigator !== 'undefined'
     ? window
     : typeof global !== 'undefined'
       ? global
       : {}
 }
-
-export const isProxyAvailable = typeof Proxy === 'function'

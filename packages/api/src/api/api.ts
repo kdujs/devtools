@@ -1,33 +1,22 @@
 import { ComponentBounds, Hookable } from './hooks'
 import { Context } from './context'
 import { ComponentInstance, ComponentState, StateBase } from './component'
-import { App } from './app'
 import { ID } from './util'
 
-export interface DevtoolsPluginApi<TSettings> {
+export interface DevtoolsPluginApi {
   on: Hookable<Context>
-  notifyComponentUpdate (instance?: ComponentInstance): void
-  addTimelineLayer (options: TimelineLayerOptions): void
-  addTimelineEvent (options: TimelineEventOptions): void
-  addInspector (options: CustomInspectorOptions): void
-  sendInspectorTree (inspectorId: string): void
-  sendInspectorState (inspectorId: string): void
-  selectInspectorNode (inspectorId: string, nodeId: string): void
+  notifyComponentUpdate (instance?: ComponentInstance)
+  addTimelineLayer (options: TimelineLayerOptions)
+  addTimelineEvent (options: TimelineEventOptions)
+  addInspector (options: CustomInspectorOptions)
+  sendInspectorTree (inspectorId: string)
+  sendInspectorState (inspectorId: string)
   getComponentBounds (instance: ComponentInstance): Promise<ComponentBounds>
   getComponentName (instance: ComponentInstance): Promise<string>
-  getComponentInstances (app: App): Promise<ComponentInstance[]>
-  highlightElement (instance: ComponentInstance): void
-  unhighlightElement (): void
-  getSettings (pluginId?: string): TSettings
-  now (): number
-  /**
-   * @private Not implemented yet
-   */
-  setSettings (values: TSettings): void
 }
 
 export interface AppRecord {
-  id: string
+  id: number
   name: string
   instanceMap: Map<string, ComponentInstance>
   rootInstance: ComponentInstance
@@ -37,9 +26,6 @@ export interface TimelineLayerOptions<TData = any, TMeta = any> {
   id: string
   label: string
   color: number
-  skipScreenshots?: boolean
-  groupsOnly?: boolean
-  ignoreNoDurationGroups?: boolean
   screenshotOverlayRender?: (event: TimelineEvent<TData, TMeta> & ScreenshotOverlayEvent, ctx: ScreenshotOverlayRenderContext) => ScreenshotOverlayRenderResult | Promise<ScreenshotOverlayRenderResult>
 }
 
@@ -76,31 +62,12 @@ export interface TimelineEvent<TData = any, TMeta = any> {
   subtitle?: string
 }
 
-export interface TimelineMarkerOptions {
-  id: string
-  time: number
-  color: number
-  label: string
-  all?: boolean
-}
-
 export interface CustomInspectorOptions {
   id: string
   label: string
   icon?: string
   treeFilterPlaceholder?: string
   stateFilterPlaceholder?: string
-  noSelectionText?: string
-  actions?: {
-    icon: string
-    tooltip?: string
-    action: () => void | Promise<void>
-  }[]
-  nodeActions?: {
-    icon: string
-    tooltip?: string
-    action: (nodeId: string) => void | Promise<void>
-  }[]
 }
 
 export interface CustomInspectorNode {
@@ -114,9 +81,8 @@ export interface InspectorNodeTag {
   label: string
   textColor: number
   backgroundColor: number
-  tooltip?: string
 }
 
 export interface CustomInspectorState {
-  [key: string]: (StateBase | Omit<ComponentState, 'type'>)[]
+  [key: string]: (StateBase | ComponentState)[]
 }

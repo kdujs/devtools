@@ -1,7 +1,6 @@
 node_modules
 .DS_Store
 build
-/dist/*
 *.zip
 *.xpi
 tests_output
@@ -13,4 +12,3 @@ yarn-error.log
 
 /packages/*/lib
 .amo.env.json
-build-node
