@@ -2,7 +2,6 @@ const fs = require('fs')
 const inquirer = require('inquirer')
 const semver = require('semver')
 const pkg = require('./package.json')
-const manifest = require('./packages/shell-chrome/manifest.json')
 
 const IS_CI = !!(process.env.CIRCLECI || process.env.GITHUB_ACTIONS)
 
@@ -36,19 +35,6 @@ const curVersion = pkg.version
     }])
 
   if (yes) {
-    const isBeta = newVersion.includes('beta')
-    pkg.version = newVersion
-    if (isBeta) {
-      const [, baseVersion, betaVersion] = /(.*)-beta\.(\w+)/.exec(newVersion)
-      manifest.version = `${baseVersion}.${betaVersion}`
-      manifest.version_name = `${baseVersion} beta ${betaVersion}`
-      applyIcons(manifest, '-beta')
-    } else {
-      manifest.version = newVersion
-      manifest.version_name = newVersion
-      applyIcons(manifest)
-    }
-
     fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2))
     {
       // API package

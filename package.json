@@ -9,8 +9,7 @@
   "scripts": {
     "build": "lerna run build",
     "lint": "eslint --ext .js,.ts,.kdu .",
-    "zip": "node ./extension-zips.js",
-    "release": "node release.js && npm run build && npm run zip && npm run pub",
+    "release": "node release.js && npm run build && npm run pub",
     "pub": "npm run pub:api",
     "pub:api": "cd packages/api && npm publish"
   },
