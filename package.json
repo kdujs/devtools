@@ -8,7 +8,11 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "lint": "eslint --ext .js,.ts,.kdu ."
+    "lint": "eslint --ext .js,.ts,.kdu .",
+    "zip": "node ./extension-zips.js",
+    "release": "node release.js && npm run build && npm run zip && npm run pub",
+    "pub": "npm run pub:api",
+    "pub:api": "cd packages/api && npm publish"
   },
   "repository": {
     "type": "git",
@@ -21,7 +25,33 @@
   },
   "homepage": "https://github.com/kdujs/kdu-devtools#readme",
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@kdujs/eslint-config-standard": "^6.1.1",
+    "@kdujs/eslint-config-typescript": "^9.1.0",
+    "@types/chrome": "^0.0.139",
+    "@types/speakingurl": "^13.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "archiver": "^5.3.0",
+    "autoprefixer": "^9.1.5",
+    "concurrently": "^5.1.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^7.26.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-kdu": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "execa": "^4.0.3",
+    "inquirer": "^6.2.0",
+    "lerna": "^4.0.0",
+    "postcss-nested": "^4.2.1",
+    "rimraf": "^3.0.2",
+    "semver": "^5.5.1",
+    "start-server-and-test": "^1.7.1",
+    "webpack-dev-server": "^4.0.0-beta.0"
+  },
+  "resolutions": {
+    "webpack-dev-server": "=4.0.0-rc.0"
   },
   "engines": {
     "node": ">=8.10"

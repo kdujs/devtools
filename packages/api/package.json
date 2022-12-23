@@ -5,11 +5,9 @@
   "main": "lib/cjs/index.js",
   "browser": "lib/esm/index.js",
   "module": "lib/esm/index.js",
-  "types": "lib/cjs/index.d.ts",
+  "types": "lib/esm/index.d.ts",
   "sideEffects": false,
-  "author": {
-    "name": "NKDuy"
-  },
+  "author": "NKDuy",
   "files": [
     "lib/esm",
     "lib/cjs"
@@ -25,14 +23,13 @@
   },
   "scripts": {
     "build": "rimraf lib && yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc --module es2015 --outDir lib/esm",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs -d",
-    "build:watch": "yarn tsc --module commonjs --outDir lib/cjs -d -w --sourceMap",
-    "ts": "yarn build:esm"
+    "build:esm": "tsc --module es2015 --outDir lib/esm -d",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+    "build:watch": "yarn tsc --module es2015 --outDir lib/esm -d -w --sourceMap"
   },
   "devDependencies": {
     "@types/node": "^13.9.1",
     "@types/webpack-env": "^1.15.1",
-    "typescript": "^3.8.3"
+    "typescript": "^4.5.2"
   }
 }
