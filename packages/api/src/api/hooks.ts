@@ -1,6 +1,6 @@
-import { ComponentTreeNode, InspectedComponentData, ComponentInstance, ComponentDevtoolsOptions } from './component'
-import { App } from './app'
-import { CustomInspectorNode, CustomInspectorState, TimelineEvent } from './api'
+import type { ComponentTreeNode, InspectedComponentData, ComponentInstance, ComponentDevtoolsOptions } from './component.js'
+import type { App } from './app.js'
+import type { CustomInspectorNode, CustomInspectorState, TimelineEvent } from './api.js'
 
 export const enum Hooks {
   TRANSFORM_CALL = 'transformCall',
@@ -56,6 +56,7 @@ export type HookPayloads = {
     componentTreeData: ComponentTreeNode[]
     maxDepth: number
     filter: string
+    recursively: boolean
   }
   [Hooks.VISIT_COMPONENT_TREE]: {
     app: App
@@ -135,7 +136,7 @@ export type HookPayloads = {
     path: string[]
     type: string
     state: EditStatePayload
-    set: (object: any, path: string | (string[]), value: any, cb?: (object: any, field: string, value: any) => void) => void
+    set: (object: any, path?: string | (string[]), value?: any, cb?: (object: any, field: string, value: any) => void) => void
   }
   [Hooks.SET_PLUGIN_SETTINGS]: {
     app: App

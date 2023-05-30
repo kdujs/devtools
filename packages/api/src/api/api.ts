@@ -1,8 +1,8 @@
-import { ComponentBounds, Hookable } from './hooks'
-import { Context } from './context'
-import { ComponentInstance, ComponentState, StateBase } from './component'
-import { App } from './app'
-import { ID } from './util'
+import type { ComponentBounds, Hookable } from './hooks.js'
+import type { Context } from './context.js'
+import type { ComponentInstance, ComponentState, StateBase } from './component.js'
+import type { App } from './app.js'
+import type { ID } from './util.js'
 
 export interface DevtoolsPluginApi<TSettings> {
   on: Hookable<Context>
@@ -19,6 +19,7 @@ export interface DevtoolsPluginApi<TSettings> {
   highlightElement (instance: ComponentInstance): void
   unhighlightElement (): void
   getSettings (pluginId?: string): TSettings
+  now (): number
   /**
    * @private Not implemented yet
    */
@@ -94,6 +95,11 @@ export interface CustomInspectorOptions {
     icon: string
     tooltip?: string
     action: () => void | Promise<void>
+  }[]
+  nodeActions?: {
+    icon: string
+    tooltip?: string
+    action: (nodeId: string) => void | Promise<void>
   }[]
 }
 
